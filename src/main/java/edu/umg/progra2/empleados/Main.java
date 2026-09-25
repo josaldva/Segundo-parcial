@@ -388,40 +388,44 @@ public class Main {
     }
     
     private static String seleccionarTipoContrato() {
-    	
-        System.out.println();
-        System.out.println(">>> SELECCIONANDO TIPO DE CONTRATO...");
 
-        JComboBox<String> comboBox =
-                new JComboBox<>(TIPOS_CONTRATO);
+        String[] opciones = {
+                "Temporal",
+                "Permanente",
+                "Por hora"
+        };
 
-        int resultado = JOptionPane.showConfirmDialog(
+        int resultado = JOptionPane.showOptionDialog(
                 null,
-                comboBox,
-                "Seleccionar tipo de contrato",
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE
+                "Selecciona el tipo de contrato:",
+                "Tipo de contrato",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
         );
 
-        if (resultado != JOptionPane.OK_OPTION) {
-
+        if (resultado == -1) {
             throw new IllegalArgumentException(
                     "Debes seleccionar un tipo de contrato."
             );
         }
 
-        String tipoContrato =
-                (String) comboBox.getSelectedItem();
+        String tipoContrato = opciones[resultado];
+
+        System.out.println(
+                ">>> Tipo seleccionado: " + tipoContrato
+        );
 
         validarTipoContrato(tipoContrato);
 
         return tipoContrato;
     }
-    
+
     private static void validarTipoContrato(String tipoContrato) {
 
         if (tipoContrato == null) {
-
             throw new IllegalArgumentException(
                     "El tipo de contrato es obligatorio."
             );
@@ -437,7 +441,8 @@ public class Main {
         throw new IllegalArgumentException(
                 "Tipo de contrato no válido."
         );
-    }
+    }    
+    
     
     private static void verTotales()
             throws SQLException {
