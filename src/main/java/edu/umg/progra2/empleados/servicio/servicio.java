@@ -86,5 +86,23 @@ public class servicio {
                     "La fecha de contratación no puede ser futura."
             );
         }
+        
+        if (empleado.getTipoContrato() == null ||
+                empleado.getTipoContrato().trim().isEmpty()) {
+
+            throw new IllegalArgumentException(
+                    "El tipo de contrato es obligatorio."
+            );
+        }
+
+        if (!empleado.getTipoContrato().equals("Temporal") &&
+                !empleado.getTipoContrato().equals("Permanente") &&
+                !empleado.getTipoContrato().equals("Por hora")) {
+
+            throw new IllegalArgumentException(
+                    "El tipo de contrato no es válido."
+            );
+        }
     }
+    
 }
