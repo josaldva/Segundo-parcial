@@ -9,10 +9,18 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 public class Main {
 
     private static final Scanner scanner = new Scanner(System.in);
+    
+    private static final String[] TIPOS_CONTRATO = {
+            "Temporal",
+            "Permanente",
+            "Por hora"
+    };
 
     private static final servicio service =
             new servicio(new dao());
@@ -146,13 +154,18 @@ public class Main {
 
         boolean activo =
                 leerBooleano("¿Está activo? (s/n): ");
+        
+        String tipoContrato = 
+        		seleccionarTipoContrato();
 
         modelo empleado = new modelo(
+        		
                 nombre,
                 departamento,
                 salario,
                 fecha,
-                activo
+                activo,
+                tipoContrato
         );
 
         service.registrar(empleado);
@@ -362,5 +375,54 @@ public class Main {
                     "Responde solamente s o n."
             );
         }
+    }
+    
+    private static String seleccionarTipoContrato() {
+
+        JComboBox<String> comboBox =
+                new JComboBox<>(TIPOS_CONTRATO);
+
+        int resultado = JOptionPane.showConfirmDialog(
+                null,
+                comboBox,
+                "Seleccionar tipo de contrato",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (resultado != JOptionPane.OK_OPTION) {
+
+            throw new IllegalArgumentException(
+                    "Debes seleccionar un tipo de contrato."
+            );
+        }
+
+        String tipoContrato =
+                (String) comboBox.getSelectedItem();
+
+        validarTipoContrato(tipoContrato);
+
+        return tipoContrato;
+    }
+    
+    private static void validarTipoContrato(String tipoContrato) {
+
+        if (tipoContrato == null) {
+
+            throw new IllegalArgumentException(
+                    "El tipo de contrato es obligatorio."
+            );
+        }
+
+        for (String tipo : TIPOS_CONTRATO) {
+
+            if (tipo.equals(tipoContrato)) {
+                return;
+            }
+        }
+
+        throw new IllegalArgumentException(
+                "Tipo de contrato no válido."
+        );
     }
 }
