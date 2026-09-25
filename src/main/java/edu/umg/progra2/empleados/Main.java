@@ -56,6 +56,10 @@ public class Main {
                         break;
 
                     case 5:
+                        verTotales();
+                        break; 
+                    
+                    case 6:
                         System.out.println(
                                 "Programa finalizado."
                         );
@@ -81,7 +85,7 @@ public class Main {
                 );
             }
 
-        } while (opcion != 5);
+        } while (opcion != 6);
     }
 
     private static void mostrarMenu() {
@@ -94,7 +98,8 @@ public class Main {
         System.out.println("2. Registrar empleado");
         System.out.println("3. Editar empleado");
         System.out.println("4. Eliminar empleado");
-        System.out.println("5. Salir");
+        System.out.println("5. Ver totales");
+        System.out.println("6. Salir");
         System.out.println("==============================");
     }
 
@@ -430,4 +435,63 @@ public class Main {
                 "Tipo de contrato no válido."
         );
     }
+    
+    private static void verTotales()
+            throws SQLException {
+
+        List<modelo> empleados =
+                service.listarTodos();
+
+        System.out.println();
+        System.out.println("========== TOTALES ==========");
+
+        if (empleados.isEmpty()) {
+
+            System.out.println(
+                    "No hay empleados registrados."
+            );
+
+            System.out.println(
+                    "Suma de salarios: Q0.00"
+            );
+
+            System.out.println(
+                    "Promedio de salarios: Q0.00"
+            );
+
+            return;
+        }
+
+        BigDecimal suma = BigDecimal.ZERO;
+
+        for (modelo empleado : empleados) {
+
+            suma = suma.add(
+                    empleado.getSalario()
+            );
+        }
+
+        BigDecimal promedio =
+                suma.divide(
+                        BigDecimal.valueOf(empleados.size()),
+                        2,
+                        java.math.RoundingMode.HALF_UP
+                );
+
+        System.out.println(
+                "Cantidad de empleados: "
+                        + empleados.size()
+        );
+
+        System.out.println(
+                "Suma de salarios: Q"
+                        + suma.toPlainString()
+        );
+
+        System.out.println(
+                "Promedio de salarios: Q"
+                        + promedio.toPlainString()
+        );
+    }
+    
 }
