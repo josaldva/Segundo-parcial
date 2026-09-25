@@ -129,6 +129,7 @@ public class Main {
                     empleado.getNombreCompleto(),
                     empleado.getDepartamento(),
                     empleado.getSalario().toPlainString(),
+                    empleado.getTipoContrato(),
                     estado
             );
         }
