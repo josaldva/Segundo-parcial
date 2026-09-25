@@ -11,6 +11,7 @@ public class modelo {
     private BigDecimal salario;
     private LocalDate fechaContratacion;
     private boolean activo;
+    private String tipoContrato;
 
     public modelo(
             int id,
@@ -18,7 +19,8 @@ public class modelo {
             String departamento,
             BigDecimal salario,
             LocalDate fechaContratacion,
-            boolean activo) {
+            boolean activo,
+            String tipoContrato) {
 
         this.id = id;
         this.nombreCompleto = nombreCompleto;
@@ -26,6 +28,7 @@ public class modelo {
         this.salario = salario;
         this.fechaContratacion = fechaContratacion;
         this.activo = activo;
+        this.tipoContrato = tipoContrato; // mejora #4
     }
 
     public modelo(
@@ -33,7 +36,8 @@ public class modelo {
             String departamento,
             BigDecimal salario,
             LocalDate fechaContratacion,
-            boolean activo) {
+            boolean activo,
+            String tipoContrato) {
 
         this(
             0,
@@ -41,7 +45,8 @@ public class modelo {
             departamento,
             salario,
             fechaContratacion,
-            activo
+            activo,
+            tipoContrato
         );
     }
 
@@ -92,4 +97,12 @@ public class modelo {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+	public String getTipoContrato() {
+		return tipoContrato;
+	}
+
+	public void setTipoContrato(String tipoContrato) {
+		this.tipoContrato = tipoContrato;
+	}
 }
