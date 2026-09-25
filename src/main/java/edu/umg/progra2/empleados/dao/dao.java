@@ -19,8 +19,8 @@ public class dao {
         String sql = """
                 INSERT INTO empleados
                 (nombre_completo, departamento, salario,
-                 fecha_contratacion, activo)
-                VALUES (?, ?, ?, ?, ?)
+                 fecha_contratacion, activo, tipo_contrato)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """;
 
         try (
@@ -39,7 +39,7 @@ public class dao {
                     Date.valueOf(empleado.getFechaContratacion())
             );
             ps.setBoolean(5, empleado.isActivo());
-
+            ps.setString(6, empleado.getTipoContrato());
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -60,7 +60,8 @@ public class dao {
                        departamento,
                        salario,
                        fecha_contratacion,
-                       activo
+                       activo,
+                       tipo_contrato
                 FROM empleados
                 ORDER BY id
                 """;
@@ -79,7 +80,8 @@ public class dao {
                         rs.getString("departamento"),
                         rs.getBigDecimal("salario"),
                         rs.getDate("fecha_contratacion").toLocalDate(),
-                        rs.getBoolean("activo")
+                        rs.getBoolean("activo"),
+                        rs.getString("tipo_contrato")
                 );
 
                 empleados.add(empleado);
@@ -98,6 +100,7 @@ public class dao {
                        salario,
                        fecha_contratacion,
                        activo
+                       tipo_contrato
                 FROM empleados
                 WHERE id = ?
                 """;
@@ -119,7 +122,8 @@ public class dao {
                             rs.getString("departamento"),
                             rs.getBigDecimal("salario"),
                             rs.getDate("fecha_contratacion").toLocalDate(),
-                            rs.getBoolean("activo")
+                            rs.getBoolean("activo"),
+                            rs.getString("tipo_contrato")
                     );
                 }
             }
@@ -136,7 +140,8 @@ public class dao {
                     departamento = ?,
                     salario = ?,
                     fecha_contratacion = ?,
-                    activo = ?
+                    activo = ?,
+                    tipo_contrato = ?
                 WHERE id = ?
                 """;
 
@@ -154,6 +159,7 @@ public class dao {
             );
             ps.setBoolean(5, empleado.isActivo());
             ps.setInt(6, empleado.getId());
+            ps.setString(7, empleado.getTipoContrato());
 
             ps.executeUpdate();
         }
