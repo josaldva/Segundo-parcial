@@ -388,6 +388,9 @@ public class Main {
     }
     
     private static String seleccionarTipoContrato() {
+    	
+        System.out.println();
+        System.out.println(">>> SELECCIONANDO TIPO DE CONTRATO...");
 
         JComboBox<String> comboBox =
                 new JComboBox<>(TIPOS_CONTRATO);
