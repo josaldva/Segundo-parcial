@@ -222,13 +222,17 @@ public class Main {
 
         boolean activo =
                 leerBooleano("¿Está activo? (s/n): ");
+        
+        String tipoContrato =
+                seleccionarTipoContrato();
 
         empleado.setNombreCompleto(nombre);
         empleado.setDepartamento(departamento);
         empleado.setSalario(salario);
         empleado.setFechaContratacion(fecha);
         empleado.setActivo(activo);
-
+        empleado.setTipoContrato(tipoContrato);
+        
         service.actualizar(empleado);
 
         System.out.println(
